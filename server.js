@@ -1,36 +1,129 @@
+// 1. เรียกใช้งาน Module http
 const http = require('http');
-// 1. เรียกใชงาน Pool จากไลบรารี pg สําหรับจัดการการเชื่อมตอฐานขอมูล
-const { Pool } = require('pg');
-// 2. ตั้งคาการเชื่อมตอ โดยดึง URL มาจาก Environment Variable ของ Railway
-const pool = new Pool({
-connectionString: process.env.DATABASE_URL,
-});
-const port = process.env.PORT || 3000;
-const server = http.createServer(async (req, res) => {
-res.statusCode = 200;
-res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-try {
-// 3. ขอเชื่อมตอและสงคําสั่ง SQL ไปดึงขอมูลจากตาราง students
-const client = await pool.connect();
-const result = await client.query('SELECT * FROM students');
-client.release(); // คนืการเชื่อมตอเมื่อใชงานเสร็จ
-// 4. นําขอมูลที่ได(result.rows) มาประกอบเปนตาราง HTML
-let html = `<h1>ฐานขอมูลนักศึกษา (ทดสอบการเชื่อมตอ)</h1>`;
-html += `<table border="1" cellpadding="10">`;
-html += `<tr><th>รหัสนักศึกษา</th><th>ชื่อ-นามสกุล</th></tr>`;
-// วนลูปนําขอมูลแตละแถวมาแสดง
-result.rows.forEach(row => {
-html += `<tr><td>${row.student_id}</td><td>${row.student_name}</td></tr>`;
+// 2. กำหนด Port
+const port = process.env.PORT || 3000;
+
+// 3. สร้าง Server
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
+    res.end(`
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Server</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(135deg,#4facfe,#00f2fe);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+            background:#fff;
+            width:500px;
+            max-width:90%;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        }
+
+        .icon{
+            font-size:70px;
+            margin-bottom:15px;
+        }
+
+        h1{
+            color:#0077cc;
+            margin-bottom:15px;
+        }
+
+        h2{
+            color:#333;
+            margin-bottom:10px;
+        }
+
+        p{
+            color:#555;
+            line-height:1.8;
+            margin-bottom:10px;
+        }
+
+        .student{
+            background:#f4f8ff;
+            border-left:5px solid #0077cc;
+            padding:15px;
+            border-radius:10px;
+            margin:20px 0;
+        }
+
+        .footer{
+            margin-top:20px;
+            color:#888;
+            font-size:14px;
+        }
+
+        .status{
+            display:inline-block;
+            background:#28a745;
+            color:white;
+            padding:8px 20px;
+            border-radius:30px;
+            margin-top:15px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">🚀</div>
+
+    <h1>Node.js Web Server</h1>
+
+    <h2>ยินดีต้อนรับ</h2>
+
+    <div class="student">
+        <p><strong>ชื่อ:</strong> นาย ปิยะวัฒน์ คงชำนาญ</p>
+        <p><strong>รหัสนักศึกษา:</strong> 69319010258</p>
+    </div>
+
+    <p>เว็บไซต์นี้ทำงานบน <strong>Node.js</strong></p>
+    <p>Deploy สำเร็จบน <strong>Railway</strong></p>
+
+    <div class="status">
+        ✅ Server Online
+    </div>
+
+    <div class="footer">
+        Computer Science | Web Programming
+    </div>
+
+</div>
+
+</body>
+</html>
+`);
 });
-html += `</table>`;
-res.end(html);
-} catch (err) {
-// กรณเีชื่อมตอไมไดหรือเขียนชื่อตารางผิด
-console.error(err);
-res.end(`<h1>เกิดขอผิดพลาด!</h1><p>${err.message}</p>`);
-}
-});
+
+// 4. เริ่มทำงาน
 server.listen(port, () => {
-console.log(`Server is running on port: ${port}`);
+    console.log(`Server is running! เครื่องแม่ข่ายเปิดทำงานแล้วที่ช่องทาง: ${port}`);
 });
