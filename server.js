@@ -1,10 +1,10 @@
-// 1. เรียกใช้งาน Module http
+// 1. อัญเชิญเวทมนตร์คุมขัง (Module http)
 const http = require('http');
 
-// 2. กำหนด Port
+// 2. กำหนดประตูมิติแห่งพลัง (Port)
 const port = process.env.PORT || 3000;
 
-// 3. สร้าง Server
+// 3. ปลดปล่อยค่ายกลเวท (สร้าง Server)
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -15,77 +15,130 @@ const server = http.createServer((req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Server</title>
+    <title>✦ Forbidden Realm of Darkness ✦</title>
 
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cinzel', 'Segoe UI', Tahoma, sans-serif;
         }
 
-        body{
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
+        body {
+            background: radial-gradient(circle at center, #1a0006, #050508, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            color: #e0e0e0;
         }
 
-        .card{
-            background:#fff;
-            width:500px;
-            max-width:90%;
-            padding:40px;
-            border-radius:20px;
-            text-align:center;
-            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        /* เอฟเฟกต์หมอกควันแห่งความมืดลอยด้านหลัง */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 0, 51, 0.05) 10%, transparent 60%);
+            animation: pulse 6s infinite alternate ease-in-out;
+            pointer-events: none;
         }
 
-        .icon{
-            font-size:70px;
-            margin-bottom:15px;
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+            100% { transform: scale(1.2) rotate(10deg); opacity: 0.9; }
         }
 
-        h1{
-            color:#0077cc;
-            margin-bottom:15px;
+        .card {
+            background: rgba(15, 10, 15, 0.85);
+            width: 520px;
+            max-width: 90%;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #ff0033;
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.3), inset 0 0 15px rgba(255, 0, 51, 0.1);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 10;
         }
 
-        h2{
-            color:#333;
-            margin-bottom:10px;
+        .icon {
+            font-size: 75px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #ff0033;
+            animation: float 3s ease-in-out infinite;
         }
 
-        p{
-            color:#555;
-            line-height:1.8;
-            margin-bottom:10px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        .student{
-            background:#f4f8ff;
-            border-left:5px solid #0077cc;
-            padding:15px;
-            border-radius:10px;
-            margin:20px 0;
+        h1 {
+            color: #ff1a40;
+            font-size: 26px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 26, 64, 0.7);
+            margin-bottom: 10px;
         }
 
-        .footer{
-            margin-top:20px;
-            color:#888;
-            font-size:14px;
+        h2 {
+            color: #888;
+            font-size: 16px;
+            font-weight: normal;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
         }
 
-        .status{
-            display:inline-block;
-            background:#28a745;
-            color:white;
-            padding:8px 20px;
-            border-radius:30px;
-            margin-top:15px;
-            font-weight:bold;
+        p {
+            color: #bbb;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        strong {
+            color: #ff4d6d;
+        }
+
+        .student {
+            background: rgba(255, 0, 51, 0.05);
+            border: 1px solid rgba(255, 0, 51, 0.4);
+            border-left: 5px solid #ff0033;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .student p {
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #555;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .status {
+            display: inline-block;
+            background: linear-gradient(45deg, #800000, #ff0033);
+            color: #ffffff;
+            padding: 10px 24px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
+            border: 1px solid #ff6680;
+            text-shadow: 0 0 5px #000;
         }
     </style>
 </head>
@@ -94,36 +147,41 @@ const server = http.createServer((req, res) => {
 
 <div class="card">
 
-    <div class="icon">🚀</div>
+    <div class="icon">👁️‍🗨️</div>
 
-    <h1>Node.js Web Server</h1>
-
-    <h2>ยินดีต้อนรับ</h2>
+    <h1>✦ ARCH-DEMON SERVER ✦</h1>
+    <h2>ยินดีต้อนรับสู่เขตอาคมต้องห้าม... ผู้บุกรุกเอ๋ย</h2>
 
     <div class="student">
-        <p><strong>ชื่อ:</strong> นาย ปิยะวัฒน์ คงชำนาญ</p>
-        <p><strong>รหัสนักศึกษา:</strong> 69319010258</p>
+        <p>🩸 <strong>นามแห่งผู้สืบทอดพันธสัญญา:</strong> นาย ปิยะวัฒน์ คงชำนาญ</p>
+        <p>📜 <strong>รหัสตราอักขระสาป:</strong> 69319010258</p>
     </div>
 
-    <p>เว็บไซต์นี้ทำงานบน <strong>Node.js</strong></p>
-    <p>Deploy สำเร็จบน <strong>Railway</strong></p>
+    <p>พันธสัญญานี้ถูกถักทอด้วยพลังแห่ง <strong>Node.js Core</strong></p>
+    <p>สถิตอยู่ ณ ประตูมิติ <strong>Railway Abyss</strong></p>
 
     <div class="status">
-        ✅ Server Online
+        ⚡ ผนึกถูกปลดปล่อย: SERVER ONLINE
     </div>
 
     <div class="footer">
-        Computer Science | Web Programming
+        Computer Science | Dark Web Programming Ritual
     </div>
 
 </div>
 
 </body>
 </html>
-`);
+    `);
 });
 
-// 4. เริ่มทำงาน
+// 4. เริ่มพิธีกรรมอัญเชิญ
 server.listen(port, () => {
-    console.log(`Server is running! เครื่องแม่ข่ายเปิดทำงานแล้วที่ช่องทาง: ${port}`);
+    console.log(`
+    ========================================================
+    🩸 [DARK RITUAL COMPLETE] 🩸
+    พิธีกรรมอัญเชิญตื่นขึ้นแล้ว ณ ช่องทางมิติ (Port): ${port}
+    จงนอบน้อมต่อพลังแห่งความมืด... ฮ่าๆๆๆ!
+    ========================================================
+    `);
 });
